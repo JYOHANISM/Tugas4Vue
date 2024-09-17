@@ -1,0 +1,142 @@
+<template>
+  <div id="app">
+    <!-- Container utama -->
+    <div class="container">
+      <!-- Click Counter -->
+      <section class="section">
+        <h2>Click Counter</h2>
+        <button class="btn" @click="count++">Klik Saya: {{ count }}</button>
+      </section>
+
+      <!-- Box Color Changer -->
+      <section class="section">
+        <h2>Box Color Changer</h2>
+        <div class="box" :style="{ backgroundColor: boxColor }"></div>
+        <button class="btn" @click="changeBoxColor">Ganti Warna Box</button>
+      </section>
+
+      <!-- Image Carousel -->
+      <section class="section">
+        <h2>Image Carousel</h2>
+        <div class="carousel">
+          <img :src="images[currentImage]" alt="Image Carousel">
+        </div>
+        <div class="carousel-controls">
+          <button class="btn small" @click="prevImage">Sebelumnya</button>
+          <button class="btn small" @click="nextImage">Selanjutnya</button>
+        </div>
+      </section>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      count: 0, // Counter
+      boxColors: ['#FF6B6B', '#6BCB77', '#4D96FF', '#FFD93D', '#845EC2'], // Warna kotak lebih minimalis
+      boxColorIndex: 0,
+      images: [
+        'https://via.placeholder.com/400x300.png?text=Image+1',
+        'https://via.placeholder.com/400x300.png?text=Image+2',
+        'https://via.placeholder.com/400x300.png?text=Image+3'
+      ],
+      currentImage: 0
+    };
+  },
+  computed: {
+    boxColor() {
+      return this.boxColors[this.boxColorIndex];
+    }
+  },
+  methods: {
+    changeBoxColor() {
+      this.boxColorIndex = (this.boxColorIndex + 1) % this.boxColors.length;
+    },
+    prevImage() {
+      this.currentImage =
+        (this.currentImage - 1 + this.images.length) % this.images.length;
+    },
+    nextImage() {
+      this.currentImage = (this.currentImage + 1) % this.images.length;
+    }
+  }
+};
+</script>
+
+<style scoped>
+/* Menggunakan font minimalis */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f5f5f5;
+  margin: 0;
+  padding: 0;
+}
+
+#app {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+/* Container untuk memusatkan konten */
+.container {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  width: 100%;
+  text-align: center;
+}
+
+/* Setiap section dipisahkan dengan margin */
+.section {
+  margin-bottom: 40px;
+}
+
+/* Styling untuk tombol */
+.btn {
+  background-color: #4D96FF;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 16px;
+}
+
+/* Hover effect pada tombol */
+.btn:hover {
+  background-color: #3c7dc0;
+}
+
+/* Tombol kecil untuk carousel */
+.btn.small {
+  padding: 5px 10px;
+  font-size: 14px;
+  margin: 5px;
+}
+
+/* Kotak untuk Box Color Changer */
+.box {
+  width: 100px;
+  height: 100px;
+  margin: 20px auto;
+  border-radius: 10px;
+}
+
+/* Carousel gambar */
+.carousel img {
+  max-width: 100%;
+  border-radius: 10px;
+}
+
+/* Kontrol carousel */
+.carousel-controls {
+  margin-top: 10px;
+}
+</style>
